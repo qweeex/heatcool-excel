@@ -11,6 +11,12 @@ $sheet = $xls->getActiveSheet();
 $sheet->setTitle('list 1');
 
 
+/// Config
+
+$sheet->getColumnDimension('G')->setWidth(25);
+$sheet->getColumnDimension('I')->setWidth(25);
+
+
 // Шапка таблицы
 $sheet->setCellValue("A1", "Zálohová faktúra č.200400001");
 $sheet->mergeCells('A1:N1');
@@ -136,7 +142,7 @@ $sheet->getStyle("E21")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment:
 
 // Комментарии
 
-$sheet->setCellValue("I18", "Odberateľ:");
+$sheet->setCellValue("I18", "Konečný príjemca:");
 $sheet->mergeCells('I18:M18');
 $sheet->getStyle("I18")->getFont()->setBold(true);
 
@@ -144,6 +150,226 @@ $sheet->mergeCells('I19:M23');
 
 
 // Заголовки таблиц
+
+$sheet->setCellValue("B25", "Označenie dodávky");
+$sheet->mergeCells('B25:D25');
+$sheet->getStyle("B25")->getFont()->setBold(true);
+
+$sheet->setCellValue("E25", "Množstvo");
+$sheet->mergeCells('E25:F25');
+$sheet->getStyle("E25")->getFont()->setBold(true);
+$sheet->getStyle("E25")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue("G25", "J.cena");
+$sheet->getStyle("G25")->getFont()->setBold(true);
+$sheet->getStyle("G25")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue("H25", "Cena");
+$sheet->mergeCells('H25:I25');
+$sheet->getStyle("H25")->getFont()->setBold(true);
+$sheet->getStyle("H25")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue("J25", "%DPH");
+$sheet->getStyle("J25")->getFont()->setBold(true);
+$sheet->getStyle("J25")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue("K25", "DPH");
+$sheet->getStyle("K25")->getFont()->setBold(true);
+$sheet->getStyle("K25")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue("L25", "EUR Celkom");
+$sheet->mergeCells('L25:M25');
+$sheet->getStyle("L25")->getFont()->setBold(true);
+$sheet->getStyle("L25")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+
+// Заголовок перед списком товаров
+
+$sheet->setCellValue("B28", "Fakturujeme Vám zálohu za objednaný tovar:  ");
+$sheet->mergeCells('B28:M28');
+$sheet->getStyle("B28")->getFont()->setBold(true);
+
+
+// Список товаров
+
+$count = 31;
+
+$arr = array(
+    array(
+        'name' => 'NIBE SPLIT - SET 5',
+        'count' => 1,
+        'price-j' => '6500',
+        'price' => '6500',
+        'dph_plus' => '0',
+        'dph' => '0',
+        'eur' => '6500'
+    ),
+    array(
+        'name' => 'NIBE SPLIT - SET 5',
+        'count' => 1,
+        'price-j' => '6500',
+        'price' => '6500',
+        'dph_plus' => '0',
+        'dph' => '0',
+        'eur' => '6500'
+    ),
+    array(
+        'name' => 'NIBE SPLIT - SET 5',
+        'count' => 1,
+        'price-j' => '6500',
+        'price' => '6500',
+        'dph_plus' => '0',
+        'dph' => '0',
+        'eur' => '6500'
+    )
+);
+
+foreach ($arr as $item) {
+
+    $sheet->setCellValue("B" .$count , $item['name']);
+    $sheet->mergeCells('B'.$count.':D'.$count);
+
+    $sheet->setCellValue("E" .$count, $item['count']);
+    $sheet->mergeCells('E'.$count.':F'.$count);
+    $sheet->getStyle("E31")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    $sheet->setCellValue("G" . $count, $item['price-j']);
+    $sheet->getStyle("G" . $count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    $sheet->setCellValue("H" . $count, $item['price']);
+    $sheet->mergeCells('H'.$count.':I' . $count);
+    $sheet->getStyle("H31")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    $sheet->setCellValue("J" . $count, $item['dph_plus']);
+    $sheet->getStyle("J" . $count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    $sheet->setCellValue("K" . $count, $item['dph']);
+    $sheet->getStyle("K" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    $sheet->setCellValue("L" .$count, $item['eur']);
+    $sheet->mergeCells('L'.$count.':M' .$count);
+    $sheet->getStyle("L" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    $count++;
+    $count++;
+}
+
+
+// Итоговая цена
+
+$count++;
+
+$sheet->setCellValue("B" .$count , "Súčet položiek");
+$sheet->mergeCells('B'.$count.':M'.$count);
+
+$count++;
+
+$sheet->setCellValue("B" .$count , "SPOLU NA ÚHRADU");
+$sheet->mergeCells('B'.$count.':C'.$count);
+$sheet->getStyle("B" .$count)->getFont()->setBold(true);
+
+
+// Сама цена
+$sheet->setCellValue("J" .$count , "6481,2");
+$sheet->mergeCells('J'.$count.':M'.$count);
+$sheet->getStyle("J" .$count)->getFont()->setBold(true);
+$sheet->getStyle("J" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$count++;
+$count++;
+
+// Информация
+$sheet->setCellValue("B" .$count , "Vystavil:");
+$sheet->mergeCells('B'.$count.':C'.$count);
+
+$sheet->setCellValue('D'.$count, 'systém obchodtepelnecerpadla');
+
+$count++;
+$count++;
+$count++;
+
+/// Текст
+
+$sheet->setCellValue("B" .$count , "Dovoľujeme si Vás upozorniť, že v prípade nedodržania termínu splatnosti uvedeného na faktúre, Vám môžeme účtovať úrok z omeškania v dohodnutej, resp. zákonnej výške a zmluvnú pokutu (ak bola dohodnutá).");
+$count2 = $count + 1;
+$sheet->mergeCells('B'.$count.':M'.$count2);
+$sheet->getStyle('B'.$count)->getAlignment()->setWrapText(true);
+
+$count++;
+$count++;
+$count++;
+
+
+/// Налоги
+
+$sheet->setCellValue('B'.$count, "Rekapitulácia v EUR:");
+$sheet->mergeCells("B".$count.":D".$count);
+$sheet->getStyle("B".$count)->getFont()->setBold(true);
+
+$sheet->setCellValue('E'.$count, "Základ v EUR");
+$sheet->mergeCells("E".$count.":G".$count);
+$sheet->getStyle("E".$count)->getFont()->setBold(true);
+$sheet->getStyle("E" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue('H'.$count, "Sadzba");
+$sheet->mergeCells("H".$count.":I".$count);
+$sheet->getStyle("H".$count)->getFont()->setBold(true);
+$sheet->getStyle("H" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue('J'.$count, "DPH v EUR");
+$sheet->mergeCells("J".$count.":K".$count);
+$sheet->getStyle("J".$count)->getFont()->setBold(true);
+$sheet->getStyle("J" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue('L'.$count, "Spolu s DPH v EUR");
+$sheet->mergeCells("L".$count.":M".$count);
+$sheet->getStyle("L".$count)->getFont()->setBold(true);
+$sheet->getStyle("L" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$count++;
+$count++;
+$count++;
+
+// Заполняем налоги
+
+$sheet->setCellValue('B'.$count, "No info");
+$sheet->mergeCells("B".$count.":D".$count);
+
+$sheet->setCellValue('E'.$count, "10");
+$sheet->mergeCells("E".$count.":G".$count);
+$sheet->getStyle("E" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue('H'.$count, "10%");
+$sheet->mergeCells("H".$count.":I".$count);
+$sheet->getStyle("H" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue('J'.$count, "");
+$sheet->mergeCells("J".$count.":K".$count);
+$sheet->getStyle("J" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$sheet->setCellValue('L'.$count, "10");
+$sheet->mergeCells("L".$count.":M".$count);
+$sheet->getStyle("L" .$count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$count++;
+$count++;
+$count++;
+
+
+/// Подвал
+
+$sheet->setCellValue('B'.$count, "Prevzal, podpis:");
+$sheet->mergeCells("B".$count.":C".$count);
+
+$sheet->setCellValue('H'.$count, "Vystavil, podpis:");
+$sheet->mergeCells("H".$count.":I".$count);
+
+$count++;
+$count++;
+$count++;
+
+$sheet->setCellValue("B".$count, "Ekonomický a informačný systém POHODA ");
+$sheet->mergeCells("B".$count.":F".$count);
 
 
 // Выводим HTTP-заголовки
