@@ -126,11 +126,11 @@ $sheet->mergeCells('B19:D19');
 $sheet->setCellValue("G19", "19.02.2020");
 $sheet->getStyle("G19")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
-$sheet->setCellValue("B20", "Dátum dodania tovaru/služby; prijatie platby:");
-$sheet->mergeCells('B20:F20');
+//$sheet->setCellValue("B20", "Dátum dodania tovaru/služby; prijatie platby:");
+//$sheet->mergeCells('B20:F20');
 
-$sheet->setCellValue("G20", "19.02.2020");
-$sheet->getStyle("G20")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+//$sheet->setCellValue("G20", "19.02.2020");
+//$sheet->getStyle("G20")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
 $sheet->setCellValue("B21", "Forma úhrady:");
 $sheet->mergeCells('B21:D21');
@@ -383,3 +383,4 @@ header ( "Content-Disposition: attachment; filename=matrix.xls" );
 // Выводим содержимое файла
 $objWriter = new PHPExcel_Writer_Excel5($xls);
 $objWriter->save('php://output');
+
